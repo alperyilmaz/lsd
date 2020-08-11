@@ -340,9 +340,7 @@ impl Icons {
         m.insert("zsh", "\u{f489}"); // ""
         m.insert("zsh-theme", "\u{f489}"); // ""
         m.insert("zshrc", "\u{f489}"); // ""
-        // biology related extensions
-        // genome related
-        m.insert("fasta", "\u{fb82}"); // "ﮂ"
+        m.insert("fasta", "\u{fb82}"); // "ﮂ" biology related extensions, genome related
         m.insert("fa", "\u{fb82}"); // "ﮂ"
         m.insert("fastq", "\u{fb82}"); // "ﮂ"
         m.insert("sra", "\u{fb82}"); // "ﮂ"
@@ -351,8 +349,7 @@ impl Icons {
         m.insert("clustal", "\u{fb82}"); // "ﮂ"
         m.insert("sam", "\u{fb82}"); // "ﮂ"
         m.insert("bam", "\u{fb82}"); // "ﮂ"
-        // moleucule related
-        m.insert("pdb", "\u{e225}"); // ""
+        m.insert("pdb", "\u{e225}"); // "" biology related extensions, molecule related
         m.insert("mol2", "\u{e225}"); // ""
         m.insert("pdbqt", "\u{e225}"); // ""
         m.insert("inchi", "\u{e225}"); // ""
