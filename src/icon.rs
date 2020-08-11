@@ -332,7 +332,7 @@ impl Icons {
         m.insert("woff2", "\u{f031}"); // ""
         m.insert("xls", "\u{f1c3}"); // ""
         m.insert("xlsx", "\u{f1c3}"); // ""
-        m.insert("xml", "\u{fabf}"); // "謹"
+        m.insert("xml", "\u{f72d}"); // ""
         m.insert("xul", "\u{e619}"); // ""
         m.insert("yaml", "\u{e60b}"); // ""
         m.insert("yml", "\u{e60b}"); // ""

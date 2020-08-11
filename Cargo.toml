@@ -1,5 +1,5 @@
 [package]
-authors = ["Peltoche <dev@halium.fr>"]
+authors = ["Peltoche <dev@halium.fr>","alper yilmaz <alperyilmaz@gmail.com>"]
 build = "build.rs"
 categories = ["command-line-utilities"]
 description = "An ls command with a lot of pretty colors and some other stuff."
@@ -8,8 +8,8 @@ license = "Apache-2.0"
 name = "lsd"
 readme = "./README.md"
 repository = "https://github.com/Peltoche/lsd"
-version = "0.17.1-pre"
-edition = "2018"
+version = "0.17.6"
+edition = "2020"
 
 [[bin]]
 name = "lsd"
