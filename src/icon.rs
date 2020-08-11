@@ -353,8 +353,8 @@ impl Icons {
         m.insert("mol2", "\u{e225}"); // ""
         m.insert("pdbqt", "\u{e225}"); // ""
         m.insert("inchi", "\u{e225}"); // ""
-        m.insert("smi", "\u{e225}"); // ""
-        
+        m.insert("smi", "\u{e225}"); // "" 
+
         m
     }
 }
