@@ -203,7 +203,7 @@ mod test {
         let name = Name::new(&file_path, file_type);
 
         assert_eq!(
-            Colour::Fixed(184).paint(" file.txt"),
+            Colour::Fixed(184).paint(" file.txt"),
             name.render(&colors, &icons, &DisplayOption::FileName)
         );
     }
