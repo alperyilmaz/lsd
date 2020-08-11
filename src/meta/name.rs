@@ -538,7 +538,7 @@ mod test {
         let name = Name::new(&file_path, file_type);
 
         assert_eq!(
-            Colour::Fixed(184).paint(" file\\ttab.txt"),
+            Colour::Fixed(184).paint(" file\\ttab.txt"),
             name.render(&colors, &icons, &DisplayOption::FileName)
         );
 
