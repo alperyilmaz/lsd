@@ -551,7 +551,7 @@ mod test {
         let name = Name::new(&file_path, file_type);
 
         assert_eq!(
-            Colour::Fixed(184).paint(" file\\nnewline.txt"),
+            Colour::Fixed(184).paint(" file\\nnewline.txt"),
             name.render(&colors, &icons, &DisplayOption::FileName)
         );
     }
