@@ -355,7 +355,6 @@ impl Icons {
         m.insert("inchi", "\u{e225}"); // ""
         m.insert("smi", "\u{e225}"); // ""
         
-
         m
     }
 }
