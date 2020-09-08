@@ -24,6 +24,11 @@ project but with some little differences.  For example it is written in rust and
 
 ![image](https://raw.githubusercontent.com/Peltoche/lsd/assets/screen_lsd.png)
 
+And here's my updated version with custom icons for certain files
+
+![image](https://raw.githubusercontent.com/alperyilmaz/lsd/assets/my_lsd_v2.png)
+
+
 ## Installation
 
 ### Prerequisites
