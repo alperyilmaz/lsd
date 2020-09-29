@@ -144,6 +144,9 @@ pub fn build() -> App<'static, 'static> {
             Arg::with_name("timesort")
                 .short("t")
                 .long("timesort")
+                .overrides_with("sizesort")
+                .overrides_with("extensionsort")
+                .overrides_with("versionsort")
                 .multiple(true)
                 .help("Sort by time modified"),
         )
@@ -151,8 +154,30 @@ pub fn build() -> App<'static, 'static> {
             Arg::with_name("sizesort")
                 .short("S")
                 .long("sizesort")
+                .overrides_with("timesort")
+                .overrides_with("extensionsort")
+                .overrides_with("versionsort")
                 .multiple(true)
                 .help("Sort by size"),
+        )
+        .arg(
+            Arg::with_name("extensionsort")
+                .short("X")
+                .long("extensionsort")
+                .overrides_with("sizesort")
+                .overrides_with("timesort")
+                .overrides_with("versionsort")
+                .multiple(true)
+                .help("Sort by file extension"),
+        )
+        .arg(
+            Arg::with_name("versionsort")
+                .short("v")
+                .multiple(true)
+                .overrides_with("timesort")
+                .overrides_with("sizesort")
+                .overrides_with("extensionsort")
+                .help("Natural sort of (version) numbers within text"),
         )
         .arg(
             Arg::with_name("reverse")
@@ -191,8 +216,8 @@ pub fn build() -> App<'static, 'static> {
         )
         .arg(
             Arg::with_name("classic")
-                .long("classic")
-                .help("Enable classic mode (no colors or icons)"),
+            .long("classic")
+            .help("Enable classic mode (no colors or icons)"),
         )
         .arg(
             Arg::with_name("no-symlink")
@@ -216,6 +241,13 @@ pub fn build() -> App<'static, 'static> {
                 .long("inode")
                 .multiple(true)
                 .help("Display the index number of each file"),
+        )
+        .arg(
+            Arg::with_name("dereference")
+                .short("L")
+                .long("dereference")
+                .multiple(true)
+                .help("When showing file information for a symbolic link, show information for the file the link references rather than for the link itself"),
         )
 }
 

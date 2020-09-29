@@ -22,6 +22,7 @@ pub struct Flags {
     pub no_symlink: bool,
     pub total_size: bool,
     pub ignore_globs: GlobSet,
+    pub dereference: bool,
 }
 
 impl Flags {
@@ -34,6 +35,7 @@ impl Flags {
         let date_inputs: Vec<&str> = matches.values_of("date").unwrap().collect();
         let dir_order_inputs: Vec<&str> = matches.values_of("group-dirs").unwrap().collect();
         let ignore_globs_inputs: Vec<&str> = matches.values_of("ignore-glob").unwrap().collect();
+        let dereference = matches.is_present("dereference");
         // inode set layout to oneline and blocks to inode,name
         let inode = matches.is_present("inode");
         let blocks_inputs: Vec<&str> = if let Some(blocks) = matches.values_of("blocks") {
@@ -56,6 +58,10 @@ impl Flags {
             SortFlag::Time
         } else if matches.is_present("sizesort") {
             SortFlag::Size
+        } else if matches.is_present("extensionsort") {
+            SortFlag::Extension
+        } else if matches.is_present("versionsort") {
+            SortFlag::Version
         } else {
             SortFlag::Name
         };
@@ -179,6 +185,7 @@ impl Flags {
             no_symlink: matches.is_present("no-symlink"),
             total_size: matches.is_present("total-size"),
             inode,
+            dereference,
         })
     }
 }
@@ -204,6 +211,7 @@ impl Default for Flags {
             total_size: false,
             ignore_globs: GlobSet::empty(),
             inode: false,
+            dereference: false,
         }
     }
 }
@@ -302,6 +310,8 @@ pub enum SortFlag {
     Name,
     Time,
     Size,
+    Version,
+    Extension,
 }
 
 #[derive(Clone, Debug, Copy, PartialEq, Eq)]
@@ -354,6 +364,7 @@ pub enum Layout {
 #[cfg(test)]
 mod test {
     use super::Flags;
+    use super::SortFlag;
     use crate::app;
     use clap::ErrorKind;
 
@@ -399,5 +410,32 @@ mod test {
 
         assert!(res.is_ok());
         assert_eq!(res.unwrap().recursion_depth, usize::max_value());
+    }
+
+    #[test]
+    fn test_multi_sort_use_last() {
+        let matches = app::build()
+            .get_matches_from_safe(vec!["lsd", "-t", "-S"])
+            .unwrap();
+        let res = Flags::from_matches(&matches);
+
+        assert!(res.is_ok());
+        assert_eq!(res.unwrap().sort_by, SortFlag::Size);
+
+        let matches = app::build()
+            .get_matches_from_safe(vec!["lsd", "-S", "-t"])
+            .unwrap();
+        let res = Flags::from_matches(&matches);
+
+        assert!(res.is_ok());
+        assert_eq!(res.unwrap().sort_by, SortFlag::Time);
+
+        let matches = app::build()
+            .get_matches_from_safe(vec!["lsd", "-t", "-S", "-X"])
+            .unwrap();
+        let res = Flags::from_matches(&matches);
+
+        assert!(res.is_ok());
+        assert_eq!(res.unwrap().sort_by, SortFlag::Extension);
     }
 }

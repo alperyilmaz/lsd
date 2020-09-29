@@ -1,6 +1,6 @@
 use crate::color::{self, Colors};
 use crate::display;
-use crate::flags::{Display, Flags, IconTheme, Layout, WhenFlag};
+use crate::flags::{Display, Flags, IconTheme, Layout, SortOrder, WhenFlag};
 use crate::icon::{self, Icons};
 use crate::meta::Meta;
 use crate::{print_error, print_output, sort};
@@ -19,6 +19,7 @@ pub struct Core {
     icons: Icons,
     //display: Display,
     colors: Colors,
+    sorters: Vec<(SortOrder, sort::SortFn)>,
 }
 
 impl Core {
@@ -58,11 +59,14 @@ impl Core {
             inner_flags.layout = Layout::OneLine;
         };
 
+        let sorters = sort::assemble_sorters(&flags);
+
         Self {
             flags,
             //display: Display::new(inner_flags),
             colors: Colors::new(color_theme),
             icons: Icons::new(icon_theme),
+            sorters,
         }
     }
 
@@ -82,7 +86,7 @@ impl Core {
         };
 
         for path in paths {
-            let mut meta = match Meta::from_path(&path) {
+            let mut meta = match Meta::from_path(&path, self.flags.dereference) {
                 Ok(meta) => meta,
                 Err(err) => {
                     print_error!("lsd: {}: {}\n", path.display(), err);
@@ -95,7 +99,7 @@ impl Core {
                     meta_list.push(meta);
                 }
                 _ => {
-                    match meta.recurse_into(depth, self.flags.display, &self.flags.ignore_globs) {
+                    match meta.recurse_into(depth, &self.flags) {
                         Ok(content) => {
                             meta.content = content;
                             meta_list.push(meta);
@@ -118,7 +122,7 @@ impl Core {
     }
 
     fn sort(&self, metas: &mut Vec<Meta>) {
-        metas.sort_unstable_by(|a, b| sort::by_meta(a, b, &self.flags));
+        metas.sort_unstable_by(|a, b| sort::by_meta(&self.sorters, a, b));
 
         for meta in metas {
             if let Some(ref mut content) = meta.content {
